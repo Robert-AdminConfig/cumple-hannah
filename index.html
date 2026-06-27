@@ -1,48 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+
 <meta charset="UTF-8">
-<title>Hannah Lía - 6 años</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hannah Lía 💜</title>
 
 <link rel="stylesheet" href="style.css">
 
-<script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
 </head>
 
 <body>
 
-<div id="bienvenida">
-<h1>¡Bienvenidos al cumpleaños de Hannah Lía!</h1>
-<h2>6 años 💜</h2>
+<div id="contenedor">
 
-<button onclick="iniciarAR()">
-Tomar mi foto
-</button>
-</div>
+    <video
+        id="camara"
+        autoplay
+        playsinline>
+    </video>
 
-<div id="ar" style="display:none;">
-<a-scene
-embedded
-arjs="sourceType: webcam;">
+    <img
+        id="marco"
+        src="marco.png">
 
-<a-marker preset="hiro">
-
-<a-image
-src="rumi.png"
-position="0 0.5 0"
-width="1"
-height="1.5">
-</a-image>
-
-</a-marker>
-
-<a-entity camera></a-entity>
-
-</a-scene>
 </div>
 
 <script src="app.js"></script>
 
 </body>
+
 </html>
