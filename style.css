@@ -1,1 +1,27 @@
+body{
+background:#e9dcff;
+font-family:Arial;
+text-align:center;
+margin:0;
+}
 
+#bienvenida{
+padding-top:80px;
+}
+
+h1{
+color:#7d42c4;
+}
+
+h2{
+color:#9d6be8;
+}
+
+button{
+background:#a770ff;
+color:white;
+border:none;
+padding:20px;
+border-radius:20px;
+font-size:20px;
+}
