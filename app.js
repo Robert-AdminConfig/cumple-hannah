@@ -1,4 +1,21 @@
-function iniciarAR(){
-document.getElementById("bienvenida").style.display="none";
-document.getElementById("ar").style.display="block";
+const video = document.getElementById("camara");
+
+navigator.mediaDevices.getUserMedia({
+
+video:{
+facingMode:"user"
 }
+
+})
+
+.then(stream=>{
+
+video.srcObject=stream;
+
+})
+
+.catch(error=>{
+
+alert("No fue posible abrir la cámara.");
+
+});
