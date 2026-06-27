@@ -30,13 +30,15 @@ overflow:hidden;
 
 #camara{
 
-position:absolute;
+    position:absolute;
 
-width:100%;
+    inset:0;
 
-height:100%;
+    width:100%;
 
-object-fit:cover;
+    height:100%;
+
+    object-fit:cover;
 
 }
 
@@ -53,4 +55,19 @@ object-fit:cover;
     pointer-events:none;
 
     z-index:1000;
+}
+#photobooth{
+
+    position:relative;
+
+    width:100vw;
+
+    height:100vh;
+
+    background:url("marco.png");
+
+    background-size:100% 100%;
+
+    background-repeat:no-repeat;
+
 }
