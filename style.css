@@ -41,13 +41,14 @@ object-fit:cover;
 }
 
 #marco{
-
-position:absolute;
-
-width:100%;
-
-height:100%;
-
-pointer-events:none;
-
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    z-index: 10;
 }
