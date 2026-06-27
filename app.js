@@ -1,10 +1,7 @@
-const video = document.getElementById("camara");
-
-const canvas = document.getElementById("canvas");
-
-const boton = document.getElementById("capturar");
-
-const compartir = document.getElementById("compartir");
+const video=document.getElementById("camara");
+const canvas=document.getElementById("canvas");
+const boton=document.getElementById("capturar");
+const compartir=document.getElementById("compartir");
 
 navigator.mediaDevices.getUserMedia({
 
@@ -18,6 +15,12 @@ facingMode:"user"
 
 video.srcObject=stream;
 
+})
+
+.catch(()=>{
+
+alert("No fue posible abrir la cámara");
+
 });
 
 boton.addEventListener("click",()=>{
@@ -28,25 +31,27 @@ canvas.height=video.videoHeight;
 
 const ctx=canvas.getContext("2d");
 
-ctx.drawImage(video,0,0);
+ctx.drawImage(video,0,0,canvas.width,canvas.height);
 
 const marco=new Image();
 
 marco.src="marco.png";
 
-marco.onload=()=>{
+marco.onload=function(){
 
 ctx.drawImage(marco,0,0,canvas.width,canvas.height);
 
+const imagen=canvas.toDataURL("image/png");
+
 const enlace=document.createElement("a");
 
-enlace.download="Hannah-Lia.png";
+enlace.href=imagen;
 
-enlace.href=canvas.toDataURL("image/png");
+enlace.download="Hannah-Lia-6-anos.png";
 
 enlace.click();
 
-compartir.style.display="inline-block";
+compartir.style.display="block";
 
 }
 
