@@ -1,8 +1,29 @@
+let stream;
+let camara = "user";
 const video = document.getElementById("camara");
 const canvas = document.getElementById("canvas");
 const boton = document.getElementById("capturar");
 
-navigator.mediaDevices.getUserMedia({
+async function iniciarCamara(){
+
+    if(stream){
+
+        stream.getTracks().forEach(track=>track.stop());
+
+    }
+
+    stream = await navigator.mediaDevices.getUserMedia({
+
+        video:{
+            facingMode:camara
+        }
+
+    });
+
+    video.srcObject = stream;
+
+}
+/*navigator.mediaDevices.getUserMedia({
   video: {
     facingMode: "user"
   }
@@ -13,7 +34,8 @@ navigator.mediaDevices.getUserMedia({
 .catch(() => {
   alert("No fue posible abrir la cámara");
 });
-
+*/
+iniciarCamara();
 boton.addEventListener("click", async () => {
 
   canvas.width = video.videoWidth;
@@ -86,5 +108,14 @@ boton.addEventListener("click", async () => {
     }
 
   };
+
+
+document.getElementById("cambiarCamara").addEventListener("click",()=>{
+
+    camara = camara === "user"
+        ? "environment"
+        : "user";
+
+    iniciarCamara();
 
 });
