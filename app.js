@@ -3,25 +3,6 @@ const video = document.getElementById("camara");
 const canvas = document.getElementById("canvas");
 const boton = document.getElementById("capturar");
 
-async function iniciarCamara(){
-
-    if(stream){
-
-        stream.getTracks().forEach(track=>track.stop());
-
-    }
-
-    stream = await navigator.mediaDevices.getUserMedia({
-
-        video:{
-            facingMode:camara
-        }
-
-    });
-
-    video.srcObject = stream;
-
-}
 navigator.mediaDevices.getUserMedia({
   video: {
     facingMode: "user"
