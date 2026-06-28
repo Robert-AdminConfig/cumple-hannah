@@ -145,38 +145,23 @@ async function startCamera(){
 }
 
 startCamera();
-
-async function subirArchivo(blob,nombre){
-
-    const base64 = await new Promise(resolve=>{
-
-        const reader = new FileReader();
-
-        reader.onloadend = ()=>{
-
-            resolve(reader.result.split(",")[1]);
-
-        };
-
-        reader.readAsDataURL(blob);
-
-    });
+async function subirArchivo(base64,nombre,mime){
 
     const respuesta = await fetch(SCRIPT_URL,{
 
         method:"POST",
 
         headers:{
-            "Content-Type":"application/json"
+            "Content-Type":"text/plain;charset=utf-8"
         },
 
         body:JSON.stringify({
 
+            file:base64,
+
             name:nombre,
 
-            mime:blob.type,
-
-            file:base64
+            mime:mime
 
         })
 
@@ -207,70 +192,54 @@ btnCambiar.onclick = async ()=>{
 
 btnFoto.onclick = async ()=>{
 
-    const canvas = document.createElement("canvas");
+    const canvas=document.createElement("canvas");
 
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
+    canvas.width=video.videoWidth;
+    canvas.height=video.videoHeight;
 
-    const ctx = canvas.getContext("2d");
+    const ctx=canvas.getContext("2d");
 
-    // Dibuja la cámara
-    ctx.drawImage(video,0,0,canvas.width,canvas.height);
+    ctx.drawImage(video,0,0);
 
-    // Dibuja el marco encima
-    const marco = new Image();
+    const marco=new Image();
 
-    marco.src = "assets/frame.png";
+    marco.src="assets/frame.png";
 
-    await new Promise(resolve=>{
-
-        marco.onload = resolve;
-
-    });
+    await new Promise(r=>marco.onload=r);
 
     ctx.drawImage(marco,0,0,canvas.width,canvas.height);
 
-canvas.toBlob(async function(blob){
+    const base64=canvas.toDataURL("image/png").split(",")[1];
 
-    if(!blob){
-
-        alert("No se pudo crear la imagen.");
-
-        return;
-
-    }
-    console.log(blob);
-
-    alert("Subiendo foto...");
+    alert("Subiendo...");
 
     try{
 
-        const r = await subirArchivo(
+        const r=await subirArchivo(
 
-            blob,
+            base64,
 
-            "foto_"+Date.now()+".png"
+            "foto_"+Date.now()+".png",
+
+            "image/png"
 
         );
 
-        console.log(r);
-
         alert("✅ Foto subida");
 
-    }
-
-    catch(err){
-
-        console.error(err);
-
-        alert(err.message);
+        console.log(r);
 
     }
 
-},"image/png");
+    catch(e){
+
+        console.error(e);
+
+        alert(e.message);
+
+    }
 
 };
-
 // =======================
 // VIDEO
 // =======================
