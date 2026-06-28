@@ -2,7 +2,16 @@ const video=document.getElementById("camara");
 const canvas=document.getElementById("canvas");
 const boton=document.getElementById("capturar");
 const compartir=document.getElementById("compartir");
+const btnFoto = document.getElementById("foto");
+const btnVideo = document.getElementById("videoBtn");
+const btnCambiar = document.getElementById("cambiar");
 
+let stream;
+let facingMode = "environment";
+
+let mediaRecorder;
+let chunks = [];
+let grabando = false;
 navigator.mediaDevices.getUserMedia({
 
 video:{
