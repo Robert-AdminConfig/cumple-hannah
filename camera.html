@@ -114,6 +114,7 @@ const SCRIPT_URL="https://script.google.com/macros/s/AKfycbx5jyIbvY5G_flOo3ezH6U
 // =======================
 
 async function startCamera(){
+    
 
     if(stream){
         stream.getTracks().forEach(track=>track.stop());
@@ -145,7 +146,45 @@ async function startCamera(){
 
 startCamera();
 
+async function subirArchivo(blob,nombre){
 
+    const base64 = await new Promise(resolve=>{
+
+        const reader = new FileReader();
+
+        reader.onloadend = ()=>{
+
+            resolve(reader.result.split(",")[1]);
+
+        };
+
+        reader.readAsDataURL(blob);
+
+    });
+
+    const respuesta = await fetch(SCRIPT_URL,{
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+
+            name:nombre,
+
+            mime:blob.type,
+
+            file:base64
+
+        })
+
+    });
+
+    return await respuesta.json();
+
+}
 // =======================
 // CAMBIAR CÁMARA
 // =======================
@@ -195,7 +234,31 @@ btnFoto.onclick = async ()=>{
 
         console.log(blob);
 
-        alert("Foto con marco lista.");
+        alert("Subiendo foto...");
+
+subirArchivo(
+
+    blob,
+
+    "foto_"+Date.now()+".png"
+
+)
+
+.then(r=>{
+
+    alert("✅ Foto subida");
+
+    console.log(r);
+
+})
+
+.catch(e=>{
+
+    alert("Error al subir");
+
+    console.error(e);
+
+});
 
         // AQUÍ SUBIREMOS A DRIVE
 
