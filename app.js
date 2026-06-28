@@ -4,7 +4,9 @@ const boton = document.getElementById("capturar");
 
 navigator.mediaDevices.getUserMedia({
   video: {
-    facingMode: "environment"
+    facingMode: {
+      ideal: "environment"
+    }
   }
 })
 .then(stream => {
