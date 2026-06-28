@@ -1,5 +1,4 @@
-let stream;
-let camara = "user";
+
 const video = document.getElementById("camara");
 const canvas = document.getElementById("canvas");
 const boton = document.getElementById("capturar");
