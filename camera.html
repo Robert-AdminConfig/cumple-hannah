@@ -166,30 +166,42 @@ btnCambiar.onclick = async ()=>{
 // FOTO
 // =======================
 
-btnFoto.onclick = ()=>{
+btnFoto.onclick = async ()=>{
 
     const canvas = document.createElement("canvas");
 
     canvas.width = video.videoWidth;
-
     canvas.height = video.videoHeight;
 
     const ctx = canvas.getContext("2d");
 
-    ctx.drawImage(video,0,0);
+    // Dibuja la cámara
+    ctx.drawImage(video,0,0,canvas.width,canvas.height);
+
+    // Dibuja el marco encima
+    const marco = new Image();
+
+    marco.src = "assets/frame.png";
+
+    await new Promise(resolve=>{
+
+        marco.onload = resolve;
+
+    });
+
+    ctx.drawImage(marco,0,0,canvas.width,canvas.height);
 
     canvas.toBlob(blob=>{
 
         console.log(blob);
 
-        alert("Foto capturada.");
+        alert("Foto con marco lista.");
 
-        // aquí luego la enviaremos a Google Drive
+        // AQUÍ SUBIREMOS A DRIVE
 
-    },"image/jpeg",0.95);
+    },"image/png");
 
 };
-
 
 // =======================
 // VIDEO
