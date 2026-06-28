@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,90 +10,113 @@
 
 html,body{
 margin:0;
+padding:0;
 width:100%;
 height:100%;
 overflow:hidden;
-background:black;
+background:#000;
 }
 
-#wrapper{
-    position:fixed;
-    inset:0;
-    overflow:hidden;
+#contenedor{
+position:fixed;
+inset:0;
+overflow:hidden;
 }
 
-#video{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-#frame{
-    position:absolute;
-    inset:0;
-    width:100vw;
-    height:100vh;
-    object-fit:fill;
-    pointer-events:none;
-    z-index:10;
-}
-
-#controls{
+video{
 position:absolute;
+inset:0;
+width:100%;
+height:100%;
+object-fit:cover;
+z-index:1;
+}
+
+#marco{
+position:absolute;
+inset:0;
+background:url("assets/frame.png") center center no-repeat;
+background-size:100% 100%;
+pointer-events:none;
+z-index:10;
+}
+
+#controles{
+position:absolute;
+left:0;
+right:0;
 bottom:30px;
-left:50%;
-transform:translateX(-50%);
-z-index:3;
+
 display:flex;
-gap:15px;
+justify-content:center;
+gap:20px;
+
+z-index:9999;
 }
 
 button{
-padding:15px 25px;
-font-size:18px;
+
+width:75px;
+height:75px;
+
 border:none;
-border-radius:12px;
+border-radius:50%;
+
+font-size:28px;
+
+background:white;
+
+box-shadow:0 0 20px rgba(0,0,0,.5);
+
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div id="container">
+<div id="contenedor">
 
-<video
-id="video"
-autoplay
-playsinline
-muted>
-</video>
+<video id="video" autoplay playsinline muted></video>
 
-<img
-id="frame"
-src="assets/frame.png">
+<div id="marco"></div>
 
-    <div id="controls">
+<div id="controles">
 
-    <button id="btnPhoto">📸</button>
+<button id="foto">📸</button>
 
-    <button id="btnVideo">🎥</button>
+<button id="videoBtn">🎥</button>
 
-    <button id="btnFlip">🔄</button>
+<button id="cambiar">🔄</button>
 
-</div>
-<div id="controls">
-<button id="photoBtn">📸 Foto</button>
-<button id="videoBtn">🎥 Video</button>
 </div>
 
 </div>
 
-<canvas id="canvas" style="display:none;"></canvas>
+<script>
 
-<script src="camera.js"></script>
+const video=document.getElementById("video");
+
+navigator.mediaDevices.getUserMedia({
+
+video:{
+facingMode:"environment"
+},
+audio:false
+
+})
+
+.then(stream=>{
+
+video.srcObject=stream;
+
+})
+
+.catch(e=>alert(e));
+
+</script>
 
 </body>
+
 </html>
