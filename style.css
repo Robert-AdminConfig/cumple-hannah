@@ -1,149 +1,41 @@
-*{
+body{
 
 margin:0;
+font-family:Arial;
+background:#111;
+color:white;
 
-padding:0;
-
-box-sizing:border-box;
-
-}
-
-html,body{
-
-width:100%;
-
-height:100%;
-
-overflow:hidden;
-
-background:#000;
-
-font-family:Arial,Helvetica,sans-serif;
-
-}
-
-#contenedor{
-
-position:relative;
-
-width:100vw;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
 
 height:100vh;
 
-overflow:hidden;
+}
+
+h1{
+
+margin-bottom:40px;
 
 }
 
-#camara{
+.boton{
 
-position:absolute;
+text-decoration:none;
+background:white;
+color:black;
 
-top:0;
+padding:18px 30px;
 
-left:0;
+border-radius:15px;
 
-width:100%;
-
-height:100%;
-
-object-fit:cover;
-
-z-index:1;
-
-}
-
-#canvas{
-
-display:none;
-
-}
-
-#marco{
-
-position:absolute;
-
-top:0;
-
-left:0;
-
-width:100%;
-
-height:100%;
-
-object-fit:fill;
-
-pointer-events:none;
-
-z-index:2;
-
-}
-
-#botones{
-
-position:absolute;
-
-bottom:25px;
-
-left:0;
-
-width:100%;
-
-display:flex;
-
-flex-direction:column;
-
-align-items:center;
-
-gap:15px;
-
-z-index:3;
-
-}
-
-#capturar{
-
-background:#8e44ff;
-
-color:white;
-
-border:none;
-
-padding:18px 40px;
+margin:15px;
 
 font-size:22px;
 
-border-radius:40px;
+width:250px;
 
-cursor:pointer;
-
-box-shadow:0 5px 20px rgba(0,0,0,.4);
-
-}
-
-#capturar:hover{
-
-background:#7a2fff;
-
-}
-
-#compartir{
-
-display:none;
-
-background:white;
-
-padding:16px 30px;
-
-border-radius:40px;
-
-text-decoration:none;
-
-font-size:20px;
-
-font-weight:bold;
-
-color:#8e44ff;
-
-box-shadow:0 5px 20px rgba(0,0,0,.4);
+text-align:center;
 
 }
