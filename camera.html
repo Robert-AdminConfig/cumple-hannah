@@ -230,39 +230,43 @@ btnFoto.onclick = async ()=>{
 
     ctx.drawImage(marco,0,0,canvas.width,canvas.height);
 
-    canvas.toBlob(blob=>{
+canvas.toBlob(async function(blob){
 
-        console.log(blob);
+    if(!blob){
 
-        alert("Subiendo foto...");
+        alert("No se pudo crear la imagen.");
 
-subirArchivo(
+        return;
 
-    blob,
+    }
 
-    "foto_"+Date.now()+".png"
+    alert("Subiendo foto...");
 
-)
+    try{
 
-.then(r=>{
+        const r = await subirArchivo(
 
-    alert("✅ Foto subida");
+            blob,
 
-    console.log(r);
+            "foto_"+Date.now()+".png"
 
-})
+        );
 
-.catch(e=>{
+        console.log(r);
 
-    alert("Error al subir");
+        alert("✅ Foto subida");
 
-    console.error(e);
+    }
 
-});
+    catch(err){
 
-        // AQUÍ SUBIREMOS A DRIVE
+        console.error(err);
 
-    },"image/png");
+        alert(err.message);
+
+    }
+
+},"image/png");
 
 };
 
