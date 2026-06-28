@@ -23,7 +23,7 @@ async function iniciarCamara(){
     video.srcObject = stream;
 
 }
-/*navigator.mediaDevices.getUserMedia({
+navigator.mediaDevices.getUserMedia({
   video: {
     facingMode: "user"
   }
@@ -34,8 +34,8 @@ async function iniciarCamara(){
 .catch(() => {
   alert("No fue posible abrir la cámara");
 });
-*/
-iniciarCamara();
+
+
 boton.addEventListener("click", async () => {
 
   canvas.width = video.videoWidth;
