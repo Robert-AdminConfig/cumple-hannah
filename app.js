@@ -90,12 +90,3 @@ boton.addEventListener("click", async () => {
   };
 
 
-document.getElementById("cambiarCamara").addEventListener("click",()=>{
-
-    camara = camara === "user"
-        ? "environment"
-        : "user";
-
-    iniciarCamara();
-
-});
