@@ -1,4 +1,3 @@
-
 const video = document.getElementById("camara");
 const canvas = document.getElementById("canvas");
 const boton = document.getElementById("capturar");
@@ -14,7 +13,6 @@ navigator.mediaDevices.getUserMedia({
 .catch(() => {
   alert("No fue posible abrir la cámara");
 });
-
 
 boton.addEventListener("click", async () => {
 
@@ -89,4 +87,4 @@ boton.addEventListener("click", async () => {
 
   };
 
-
+});
