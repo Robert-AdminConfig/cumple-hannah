@@ -1,1 +1,92 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Cámara</title>
+
+<style>
+
+html,body{
+margin:0;
+width:100%;
+height:100%;
+overflow:hidden;
+background:black;
+}
+
+#container{
+position:relative;
+width:100vw;
+height:100vh;
+overflow:hidden;
+}
+
+#video{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+#frame{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+object-fit:contain;
+pointer-events:none;
+z-index:2;
+}
+
+#controls{
+position:absolute;
+bottom:30px;
+left:50%;
+transform:translateX(-50%);
+z-index:3;
+display:flex;
+gap:15px;
+}
+
+button{
+padding:15px 25px;
+font-size:18px;
+border:none;
+border-radius:12px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="container">
+
+<video
+id="video"
+autoplay
+playsinline
+muted>
+</video>
+
+<img
+id="frame"
+src="assets/frame.png">
+
+<div id="controls">
+<button id="photoBtn">📸 Foto</button>
+<button id="videoBtn">🎥 Video</button>
+</div>
+
+</div>
+
+<canvas id="canvas" style="display:none;"></canvas>
+
+<script src="camera.js"></script>
+
+</body>
+</html>
