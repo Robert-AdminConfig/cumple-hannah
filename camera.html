@@ -96,24 +96,150 @@ box-shadow:0 0 20px rgba(0,0,0,.5);
 
 <script>
 
-const video=document.getElementById("video");
+const video = document.getElementById("video");
+const btnFoto = document.getElementById("foto");
+const btnVideo = document.getElementById("videoBtn");
+const btnCambiar = document.getElementById("cambiar");
 
-navigator.mediaDevices.getUserMedia({
+let stream = null;
+let facingMode = "environment";
 
-video:{
-facingMode:"environment"
-},
-audio:false
+let mediaRecorder = null;
+let chunks = [];
+let grabando = false;
 
-})
 
-.then(stream=>{
+// =======================
+// INICIAR CÁMARA
+// =======================
 
-video.srcObject=stream;
+async function startCamera(){
 
-})
+    if(stream){
+        stream.getTracks().forEach(track=>track.stop());
+    }
 
-.catch(e=>alert(e));
+    try{
+
+        stream = await navigator.mediaDevices.getUserMedia({
+
+            video:{
+                facingMode:facingMode
+            },
+
+            audio:true
+
+        });
+
+        video.srcObject = stream;
+
+    }
+
+    catch(error){
+
+        alert(error.message);
+
+    }
+
+}
+
+startCamera();
+
+
+// =======================
+// CAMBIAR CÁMARA
+// =======================
+
+btnCambiar.onclick = async ()=>{
+
+    facingMode =
+        facingMode==="environment"
+        ? "user"
+        : "environment";
+
+    startCamera();
+
+};
+
+
+// =======================
+// FOTO
+// =======================
+
+btnFoto.onclick = ()=>{
+
+    const canvas = document.createElement("canvas");
+
+    canvas.width = video.videoWidth;
+
+    canvas.height = video.videoHeight;
+
+    const ctx = canvas.getContext("2d");
+
+    ctx.drawImage(video,0,0);
+
+    canvas.toBlob(blob=>{
+
+        console.log(blob);
+
+        alert("Foto capturada.");
+
+        // aquí luego la enviaremos a Google Drive
+
+    },"image/jpeg",0.95);
+
+};
+
+
+// =======================
+// VIDEO
+// =======================
+
+btnVideo.onclick = ()=>{
+
+    if(!grabando){
+
+        chunks=[];
+
+        mediaRecorder=new MediaRecorder(stream);
+
+        mediaRecorder.ondataavailable=e=>{
+
+            chunks.push(e.data);
+
+        };
+
+        mediaRecorder.onstop=()=>{
+
+            const blob=new Blob(chunks,{type:"video/webm"});
+
+            console.log(blob);
+
+            alert("Video grabado.");
+
+            // aquí luego lo enviaremos a Drive
+
+        };
+
+        mediaRecorder.start();
+
+        grabando=true;
+
+        btnVideo.innerHTML="⏹";
+
+    }
+
+    else{
+
+        mediaRecorder.stop();
+
+        grabando=false;
+
+        btnVideo.innerHTML="🎥";
+
+    }
+
+};
 
 </script>
 
