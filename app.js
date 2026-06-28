@@ -1,58 +1,90 @@
-const video=document.getElementById("camara");
-const canvas=document.getElementById("canvas");
-const boton=document.getElementById("capturar");
-const compartir=document.getElementById("compartir");
+const video = document.getElementById("camara");
+const canvas = document.getElementById("canvas");
+const boton = document.getElementById("capturar");
 
 navigator.mediaDevices.getUserMedia({
-
-video:{
-facingMode:"user"
-}
-
+  video: {
+    facingMode: "user"
+  }
 })
-
-.then(stream=>{
-
-video.srcObject=stream;
-
+.then(stream => {
+  video.srcObject = stream;
 })
-
-.catch(()=>{
-
-alert("No fue posible abrir la cámara");
-
+.catch(() => {
+  alert("No fue posible abrir la cámara");
 });
 
-boton.addEventListener("click",()=>{
+boton.addEventListener("click", async () => {
 
-canvas.width=video.videoWidth;
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
 
-canvas.height=video.videoHeight;
+  const ctx = canvas.getContext("2d");
 
-const ctx=canvas.getContext("2d");
+  // Foto
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-ctx.drawImage(video,0,0,canvas.width,canvas.height);
+  // Marco
+  const marco = new Image();
+  marco.src = "marco.png";
 
-const marco=new Image();
+  marco.onload = async () => {
 
-marco.src="marco.png";
+    ctx.drawImage(marco, 0, 0, canvas.width, canvas.height);
 
-marco.onload=function(){
+    // Base64 sin el encabezado
+    const base64 = canvas.toDataURL("image/png").split(",")[1];
 
-ctx.drawImage(marco,0,0,canvas.width,canvas.height);
+    boton.disabled = true;
+    boton.innerHTML = "⏳ Compartiendo...";
 
-const imagen=canvas.toDataURL("image/png");
+    try {
 
-const enlace=document.createElement("a");
+      const respuesta = await fetch(
+        "https://script.google.com/macros/s/AKfycby0N7-C3sqccRVgdBeQZYl0ZfS-tTuiR8pDQcP1mJ-suitpeD36nD_mjq6kx1zBV0F2fA/exec",
+        {
+          method: "POST",
+          redirect: "follow",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          },
+          body: JSON.stringify({
+            imagen: base64
+          })
+        }
+      );
 
-enlace.href=imagen;
+      const resultado = await respuesta.json();
 
-enlace.download="Hannah-Lia-6-anos.png";
+      if (resultado.ok) {
 
-enlace.click();
+        boton.innerHTML = "💜 ¡Foto enviada!";
 
-compartir.style.display="block";
+        setTimeout(() => {
+          boton.disabled = false;
+          boton.innerHTML = "📸 Tomar Foto";
+        }, 2500);
 
-}
+      } else {
+
+        alert("Error al subir la foto");
+
+        boton.disabled = false;
+        boton.innerHTML = "📸 Tomar Foto";
+
+      }
+
+    } catch (e) {
+
+      console.error(e);
+
+      alert("No fue posible conectar con Google Drive.");
+
+      boton.disabled = false;
+      boton.innerHTML = "📸 Tomar Foto";
+
+    }
+
+  };
 
 });
